@@ -14,14 +14,13 @@ public interface DuenoRepository extends JpaRepository<Dueno, Long> {
                 SELECT 
                     e.id AS empleadoId,
                     e.nombre AS nombre,
-                    COUNT(cp.id) AS totalPasajes,
-                    SUM(cp.ingreso_real) AS ingreso
+                    cp.total_contado AS totalPasajes,
+                    cp.ingreso_real AS ingreso
                 FROM contador_pasajero cp
-                JOIN empleado e ON cp.empleado_id = e.id
+                JOIN empleado e 
+                ON cp.empleado_id = e.id
                 WHERE e.dueno_id = :duenoId
-                AND cp.fecha_pisada >= CURRENT_DATE
-                AND cp.fecha_pisada < CURRENT_DATE + INTERVAL '1 day'
-                GROUP BY e.id, e.nombre
+                AND cp.fecha = CURRENT_DATE
                 """, nativeQuery = true)
-            List<Object[]> getResumenHoy(@Param("duenoId") Long duenoId);
+                List<Object[]> getResumenHoy(@Param("duenoId") Long duenoId);
 }

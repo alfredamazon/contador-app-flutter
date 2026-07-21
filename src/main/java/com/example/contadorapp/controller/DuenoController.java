@@ -47,7 +47,7 @@ public class DuenoController {
     // 🔴 LOGIN CORREGIDO
 @PostMapping("/login")
 public ResponseEntity<?> login(@RequestBody LoginRequestDTO req) {
-
+System.out.println("Entró al login");
     if (req.getNombre() == null || req.getPassword() == null) {
         return ResponseEntity
                 .badRequest()
